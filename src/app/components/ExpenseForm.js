@@ -1,18 +1,30 @@
 import { React, useState, useEffect } from 'react'
 import { Button, Form, Row, Col } from 'react-bootstrap';
+import { useDispatch } from 'react-redux'
+import { PostExpense } from '../services/expenses';
 
-const ExpenseForm = () => {
+const ExpenseForm = ({ expense, setIsEditing }) => {
     const descriptions = ['Groceries', 'Gas', 'Traveling', 'Loan', 'Restaurant'];
     const [amount, setAmount] = useState(0);
     const [description, setDescription] = useState(descriptions[0]);
     const [isNewExpense, setIsNewExpense] = useState(true);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (expense !== undefined) {
+            setIsNewExpense(false);
+            setAmount(expense.amount);
+        } else {
+            setIsNewExpense(true);
+        }
+    }, [expense]);
 
     return <Form onSubmit={event => {
         event.preventDefault();
-        if(isNewExpense){
-
-        }else{
-
+        if (isNewExpense) {
+            PostExpense(dispatch, { description: description, amount: amount });
+        } else {
+            setIsEditing(false);
         }
     }}>
         <Row>
@@ -37,12 +49,12 @@ const ExpenseForm = () => {
                     : <div>
                         <Button variant='danger'>Delete</Button>
                         <Button variant='success' type='submit'>Save</Button>
-                        <Button variant='default'>Cancel</Button>
+                        <Button variant='default' onClick={() => setIsEditing(false)}>Cancel</Button>
                     </div>
                 }
             </div>
         </Row>
-    </Form>
+    </Form >
 };
 
 export default ExpenseForm;

@@ -26,3 +26,11 @@ export const GetExpenses = async (dispatch) => {
         console.log(error)
     }
 };
+
+export const PostExpense = async (dispatch, expense) => {
+    try {
+        dispatch(ActionCreators.newExpense({ id: 10, description: expense.description, amount: expense.amount }));
+    } catch (error) {
+        console.log(error);
+    }
+};
