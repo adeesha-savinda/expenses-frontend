@@ -26,9 +26,9 @@ const ExpenseList = () => {
         GetExpenses(dispatch);
     }, [dispatch]);
 
-    return expenses.map(e =>
-        <div style={{ marginBottom: '1rem' }}>
-            <ListRow expense={e} />
+    return expenses.map(expense =>
+        <div key={expense.id} style={{ marginBottom: '1rem' }}>
+            <ListRow expense={expense} />
         </div>
     );
     // return 'afadasdasd';

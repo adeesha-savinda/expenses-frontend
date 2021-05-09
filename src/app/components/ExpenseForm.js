@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react'
 import { Button, Form, Row, Col } from 'react-bootstrap';
 import { useDispatch } from 'react-redux'
-import { PostExpense } from '../services/expenses';
+import { DeleteExpense, EditExpense, PostExpense } from '../services/expenses';
 
 const ExpenseForm = ({ expense, setIsEditing }) => {
     const descriptions = ['Groceries', 'Gas', 'Traveling', 'Loan', 'Restaurant'];
@@ -24,6 +24,7 @@ const ExpenseForm = ({ expense, setIsEditing }) => {
         if (isNewExpense) {
             PostExpense(dispatch, { description: description, amount: amount });
         } else {
+            EditExpense(dispatch, { id: expense.id, description: description, amount: amount });
             setIsEditing(false);
         }
     }}>
@@ -47,7 +48,7 @@ const ExpenseForm = ({ expense, setIsEditing }) => {
                 {isNewExpense
                     ? <Button variant='primary' type='submit'>Add</Button>
                     : <div>
-                        <Button variant='danger'>Delete</Button>
+                        <Button variant='danger' onClick={() => DeleteExpense(dispatch, expense)}>Delete</Button>
                         <Button variant='success' type='submit'>Save</Button>
                         <Button variant='default' onClick={() => setIsEditing(false)}>Cancel</Button>
                     </div>

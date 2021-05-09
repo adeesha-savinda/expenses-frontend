@@ -34,3 +34,19 @@ export const PostExpense = async (dispatch, expense) => {
         console.log(error);
     }
 };
+
+export const EditExpense = async (dispatch, expense) => {
+    try {
+        dispatch(ActionCreators.editExpense(expense));
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+export const DeleteExpense = async (dispatch, expense) => {
+    try{
+        dispatch(ActionCreators.deleteExpense(expense));
+    }catch(error){
+        console.log(error);
+    }
+};
